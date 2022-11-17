@@ -1,4 +1,4 @@
-class Account{
+export class Account{
     //Main constructor 
     constructor(loginName, password, userName, userTag, image, gainLoss){
         this.loginName=loginName;
@@ -8,4 +8,5 @@ class Account{
         this.image=image;
         this.gainLoss=gainLoss;
     }
+
 }

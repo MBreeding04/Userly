@@ -9,10 +9,9 @@ import Paper from '@mui/material/Paper';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import Account from './models/Account.js';
-import Icon from "@mui/material/Icon";
+import {Account} from './models/Account.js';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+
 
 function createValAccountObject(accountName, username, password, image, gainLoss) {
   return { accountName, username, password, image, gainLoss };
@@ -121,9 +120,5 @@ function App() {
       </div>
     </ThemeProvider>
   );
-}
-
-function makeNewAccount(query){
-  var account = new Account("itsFattyMatty", query.name, "Password", query.images.large , query.mmr_change_to_last_game);
 }
 export default App;

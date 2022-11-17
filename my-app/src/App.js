@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import Account from './models/Account.js';
 import Icon from "@mui/material/Icon";
 
 function createValAccountObject(accountName, username, password, image, gainLoss) {
@@ -28,8 +29,6 @@ const darkTheme = createTheme({
     mode: 'dark',
   },
 });
-
-
 
 function App() {
   return (
@@ -81,5 +80,12 @@ function App() {
     </ThemeProvider>
   );
 }
-
+async function getValData(){
+  let response = await fetch('https://api.henrikdev.xyz/valorant/v1/mmr/na/TTV%20Glisby/gamer');
+  let query = await response.json();
+  return query.data;
+}
+function makeNewAccount(query){
+  var account = new Account("itsFattyMatty", query.name, "Password", query.images.large , query.mmr_change_to_last_game);
+}
 export default App;

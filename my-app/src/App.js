@@ -40,18 +40,30 @@ function App() {
   const getValAccounts = () => {
     setLoading(true);
     console.log(JSON.parse(process.env.REACT_APP_USER_INFO));
-    axios
-      .get('https://api.henrikdev.xyz/valorant/v1/mmr/na/TTV%20Glisby/gamer')
-      .then((res) => {
-        setLoading(false);
-        setAccounts(res.data);
+    let parsedAccounts = JSON.parse(process.env.REACT_APP_USER_INFO);
+    let query = parsedAccounts.map(account => {
+        return fetch(`https://api.henrikdev.xyz/valorant/v1/mmr/na/${account.userName}/${account.userTag}`);
+      });
+
+    Promise.all(query)
+      .then(body => {
+        return Promise.all(body.map((res) => {
+          return res.json()
+        }))
       })
-      .catch((err) => {
+      .then(res => {
+        res.forEach((account) => {
+          makeNewAccount(account.data)
+        })
         setLoading(false);
-        console.log(err);
-        return null;
       })
   };
+
+  const makeNewAccount = (newAccount) => {
+    let account = new Account(newAccount.data.loginName, newAccount.data.password, newAccount.data.userName, newAccount.data.tag, newAccount.data.image, newAccount.data.gainLoss);
+    console.log("hit")
+    setAccounts(accounts => [...accounts, account])
+  }
 
   useEffect(() => {
     getValAccounts();

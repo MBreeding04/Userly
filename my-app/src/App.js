@@ -11,6 +11,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import {Account} from './models/Account.js';
 import { useEffect, useState } from 'react';
+import ModalBody from './components/ModalBody';
+import Button from "@mui/material/Button";
+import Modal from '@mui/material/Modal';
 
 
 function createValAccountObject(accountName, username, password, image, gainLoss) {
@@ -35,6 +38,9 @@ function App() {
 
   const [loading, setLoading] = useState(true);
   const [accounts, setAccounts] = useState([]);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const getValAccounts = () => {
     setLoading(true);
@@ -59,9 +65,9 @@ function App() {
   };
 
   const makeNewAccount = (newAccount) => {
-    let account = new Account(newAccount.data.loginName, newAccount.data.password, newAccount.data.userName, newAccount.data.tag, newAccount.data.image, newAccount.data.gainLoss);
+    // let account = new Account(newAccount.data.loginName, newAccount.data.password, newAccount.data.userName, newAccount.data.tag, newAccount.data.image, newAccount.data.gainLoss);
     console.log("hit")
-    setAccounts(accounts => [...accounts, account])
+    // setAccounts(accounts => [...accounts, account])
   }
 
   useEffect(() => {
@@ -117,6 +123,15 @@ function App() {
           </Table>
         </TableContainer>
         </div>
+        <Button onClick={handleOpen}>Open modal</Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <ModalBody />
+        </Modal>
       </div>
     </ThemeProvider>
   );

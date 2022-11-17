@@ -1,5 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
+import Account from './models/Account.js';
+import ("dotenv").config();
 
 function App() {
   return (
@@ -21,5 +23,12 @@ function App() {
     </div>
   );
 }
-
+async function getValData(){
+  let response = await fetch('https://api.henrikdev.xyz/valorant/v1/mmr/na/TTV%20Glisby/gamer');
+  let query = await response.json();
+  return query.data;
+}
+function makeNewAccount(query){
+  var account = new Account("itsFattyMatty", query.name, "Password", query.images.large , query.mmr_change_to_last_game);
+}
 export default App;

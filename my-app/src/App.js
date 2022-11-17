@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
 import Account from './models/Account.js';
-import ("dotenv").config();
 
 function App() {
   return (

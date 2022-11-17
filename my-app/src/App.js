@@ -10,10 +10,11 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import {Account} from './models/Account.js';
-import { useEffect, useState } from 'react';
+import {useState} from 'react';
 import ModalBody from './components/ModalBody';
 import Button from "@mui/material/Button";
 import Modal from '@mui/material/Modal';
+
 
 
 function createValAccountObject(accountName, username, password, image, gainLoss) {
@@ -36,48 +37,15 @@ const darkTheme = createTheme({
 
 function App() {
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [accounts, setAccounts] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const getValAccounts = () => {
-    setLoading(true);
-    console.log(JSON.parse(process.env.REACT_APP_USER_INFO));
-    let parsedAccounts = JSON.parse(process.env.REACT_APP_USER_INFO);
-    let query = parsedAccounts.map(account => {
-        return fetch(`https://api.henrikdev.xyz/valorant/v1/mmr/na/${account.userName}/${account.userTag}`);
-      });
-
-    Promise.all(query)
-      .then(body => {
-        return Promise.all(body.map((res) => {
-          return res.json()
-        }))
-      })
-      .then(res => {
-        res.forEach((account) => {
-          makeNewAccount(account.data)
-        })
-        setLoading(false);
-      })
-  };
-
-  const makeNewAccount = (newAccount) => {
-    // let account = new Account(newAccount.data.loginName, newAccount.data.password, newAccount.data.userName, newAccount.data.tag, newAccount.data.image, newAccount.data.gainLoss);
-    console.log("hit")
-    // setAccounts(accounts => [...accounts, account])
-  }
-
-  useEffect(() => {
-    getValAccounts();
-  }, []);
-
   if (loading) {
     return <div>Loading...</div>;
   }
-
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
@@ -130,7 +98,7 @@ function App() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <ModalBody />
+          <ModalBody/>
         </Modal>
       </div>
     </ThemeProvider>

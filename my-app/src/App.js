@@ -11,6 +11,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Account from './models/Account.js';
 import Icon from "@mui/material/Icon";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function createValAccountObject(accountName, username, password, image, gainLoss) {
   return { accountName, username, password, image, gainLoss };
@@ -31,6 +33,34 @@ const darkTheme = createTheme({
 });
 
 function App() {
+
+  const [loading, setLoading] = useState(true);
+  const [accounts, setAccounts] = useState([]);
+
+  const getValAccounts = () => {
+    setLoading(true);
+    console.log(JSON.parse(process.env.REACT_APP_USER_INFO));
+    axios
+      .get('https://api.henrikdev.xyz/valorant/v1/mmr/na/TTV%20Glisby/gamer')
+      .then((res) => {
+        setLoading(false);
+        setAccounts(res.data);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+        return null;
+      })
+  };
+
+  useEffect(() => {
+    getValAccounts();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
@@ -40,7 +70,7 @@ function App() {
           <Table aria-label="valorant-account-tables">
             <TableHead>
               <TableRow>
-                <TableCell>Account Name</TableCell>
+                <TableCell>{process.env.REACT_APP_USER_INFO}</TableCell>
                 <TableCell>Username</TableCell>
                 <TableCell>Password</TableCell>
                 <TableCell>Rank</TableCell>
@@ -80,11 +110,7 @@ function App() {
     </ThemeProvider>
   );
 }
-async function getValData(){
-  let response = await fetch('https://api.henrikdev.xyz/valorant/v1/mmr/na/TTV%20Glisby/gamer');
-  let query = await response.json();
-  return query.data;
-}
+
 function makeNewAccount(query){
   var account = new Account("itsFattyMatty", query.name, "Password", query.images.large , query.mmr_change_to_last_game);
 }

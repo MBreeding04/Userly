@@ -30,9 +30,11 @@ function ModalBody() {
         //sends data to local storage
         localStorage.setItem("loginName",inputData['loginName'].toString());
         localStorage.setItem("password",inputData['password'].toString());
-        localStorage.setItem("userName",inputData['userName'].toString());
-        localStorage.setItem("userTag",inputData['userTag'].toString());
         localStorage.setItem("image",api.data.images.small.toString());
+
+        if(api.data.mmr_change_to_last_game > 0){
+            api.data.mmr_change_to_last_game = '+'+api.data.mmr_change_to_last_game;
+        }
         localStorage.setItem("gainLoss",api.data.mmr_change_to_last_game.toString());
 
     };

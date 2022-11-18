@@ -17,16 +17,22 @@ import Modal from '@mui/material/Modal';
 
 
 
-function createValAccountObject(accountName, username, password, image, gainLoss) {
-  return { accountName, username, password, image, gainLoss };
+function createValAccountObject() {
+  const loginName = localStorage.getItem("loginName");
+  const password = localStorage.getItem("password");
+  const userName = localStorage.getItem("userName");
+  const userTag = localStorage.getItem("userTag");
+  const image = localStorage.getItem("image");
+  const gainLoss = localStorage.getItem("gainLoss");
+  return new Account(loginName,password,image,gainLoss);
 };
 
 const rows = [
-  createValAccountObject('test#1223', 'Sample name', "sample password", "sample image", "sample gain"), // Returns an Object for the account
-  createValAccountObject('test#1423', 'Sample name', "sample password", "sample image", "sample gain"),
-  createValAccountObject('test#1523', 'Sample name', "sample password", "sample image", "sample gain"),
-  createValAccountObject('test#16223', 'Sample name', "sample password", "sample image", "sample gain"),
-  createValAccountObject('test#1123', 'Sample name', "sample password", "sample image", "sample gain"),
+  createValAccountObject(), // Returns an Object for the account
+  createValAccountObject(),
+  createValAccountObject(),
+  createValAccountObject(),
+  createValAccountObject(),
 ];
 
 const darkTheme = createTheme({
@@ -73,7 +79,7 @@ function App() {
                   </TableCell>
                   <TableCell>
                     <div className="table-username">
-                      {row.username} 
+                      {row.loginName} 
                       <VisibilityIcon /> 
                     </div>
                   </TableCell>
@@ -83,7 +89,10 @@ function App() {
                       <VisibilityIcon /> 
                     </div>
                   </TableCell>
-                  <TableCell>{row.image}</TableCell>
+                  <TableCell><img
+        src = {row.image}
+        alt ="car"
+      /></TableCell>
                   <TableCell>{row.gainLoss}</TableCell>
                 </TableRow>
               ))}

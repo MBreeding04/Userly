@@ -11,20 +11,30 @@ function ModalBody() {
     const userTag = useState();
     const loginName = useState();
     const password = useState();
+    var image = '';
+    var gainLoss = '';
     var inputData = new Array();
-    var api = '';
+    var api = useState();
     
     //function to package data in an array and send it to local storage
-    function getInputData(){
+    async function getInputData(){
         inputData['userName'] = userName.current.value;
         inputData['userTag'] = userTag.current.value;
         inputData['loginName'] = loginName.current.value;
         inputData['password'] = password.current.value;
+
+        //fetches data from the API
+        await fetch(`https://api.henrikdev.xyz/valorant/v1/mmr/na/${inputData['userName'].toString()}/${inputData['userTag'].toString()}`).then(
+            (res) => res.json()).then((res) => api = res);
+
+        //sends data to local storage
         localStorage.setItem("loginName",inputData['loginName'].toString());
         localStorage.setItem("password",inputData['password'].toString());
-        fetch(`https://api.henrikdev.xyz/valorant/v1/mmr/na/${inputData['userName'].toString()}/${inputData['userTag'].toString()}`).then(
-            (res) => console.log(res.json())).then((res) => api = res.json());
-        //error happens data is not parsed correctly
+        localStorage.setItem("userName",inputData['userName'].toString());
+        localStorage.setItem("userTag",inputData['userTag'].toString());
+        localStorage.setItem("image",api.data.images.small.toString());
+        localStorage.setItem("gainLoss",api.data.mmr_change_to_last_game.toString());
+
     };
     return(
         <div className='container'>

@@ -1,7 +1,8 @@
 import './ModalBody.css';
 import Button from "@mui/material/Button";
 import TextField from '@mui/material/TextField';
-import {useState} from 'react';
+import { useState } from 'react';
+import { Account } from '../models/Account.js';
 
 
 function ModalBody() {
@@ -11,13 +12,12 @@ function ModalBody() {
     const userTag = useState();
     const loginName = useState();
     const password = useState();
-    var image = '';
-    var gainLoss = '';
     var inputData = new Array();
     var api = useState();
-    
+
     //function to package data in an array and send it to local storage
-    async function getInputData(){
+    async function getInputData() {
+        try{
         inputData['userName'] = userName.current.value;
         inputData['userTag'] = userTag.current.value;
         inputData['loginName'] = loginName.current.value;
@@ -27,25 +27,51 @@ function ModalBody() {
         await fetch(`https://api.henrikdev.xyz/valorant/v1/mmr/na/${inputData['userName'].toString()}/${inputData['userTag'].toString()}`).then(
             (res) => res.json()).then((res) => api = res);
 
-        //sends data to local storage
-        localStorage.setItem("loginName",inputData['loginName'].toString());
-        localStorage.setItem("password",inputData['password'].toString());
-        localStorage.setItem("image",api.data.images.small.toString());
-
-        if(api.data.mmr_change_to_last_game > 0){
-            api.data.mmr_change_to_last_game = '+'+api.data.mmr_change_to_last_game;
+        if (api.data.mmr_change_to_last_game > 0) {
+            api.data.mmr_change_to_last_game = '+' + api.data.mmr_change_to_last_game;
         }
-        localStorage.setItem("gainLoss",api.data.mmr_change_to_last_game.toString());
+        let amountOfArraysOfData = 0;
+        //gets number of objects stored in local storage
 
+        if (localStorage.getItem("accounts") === null) {
+        }
+        else {
+            amountOfArraysOfData = localStorage.getItem("accounts");
+            amountOfArraysOfData = JSON.parse(amountOfArraysOfData);
+            amountOfArraysOfData = amountOfArraysOfData.length;
+        }
+        //stores the data in an object so we can store multiple objects of data i.e multiple accounts
+        let array = [];
+        let existingAccounts = [];
+        let accounts = new Account(inputData['loginName'], inputData['password'], api.data.images.small.toString(), api.data.mmr_change_to_last_game.toString());
+        if (amountOfArraysOfData > 0) {
+            console.log("im in");
+            for (let i = 0; i < amountOfArraysOfData; i++) {
+                let temp = localStorage.getItem("accounts");
+                temp = JSON.parse(temp);
+                existingAccounts[i] = new Account(temp[i].loginName, temp[i].password, temp[i].image, temp[i].gainLoss);
+                console.log(existingAccounts[i]);
+                array.push(existingAccounts[i]);
+            }
+        }
+        array.push(accounts);
+        localStorage.setItem("accounts", JSON.stringify(array));
+        console.log("after");
+        window.location.reload(false);
+    }
+    catch{
+        console.log("jacob the api failed again...");
+    }
     };
-    return(
+    return (
         <div className='container'>
-            <TextField required id="outlined-basic" label="username" variant="outlined"  inputRef= {userName}/>
-            <TextField required id="outlined-basic" label="tag" variant="outlined" inputRef= {userTag} />
-            <TextField required id="outlined-basic" label="login" variant="outlined" inputRef= {loginName} />
-            <TextField required id="outlined-basic" label="password" variant="outlined" inputRef= {password} />
-            <Button variant="text" required id="Submit"onClick={getInputData}>Submit</Button>
-            
+            <div id='error'></div>
+            <TextField required id="outlined-basic" label="username" variant="outlined" inputRef={userName} />
+            <TextField required id="outlined-basic" label="tag" variant="outlined" inputRef={userTag} />
+            <TextField required id="outlined-basic" label="login" variant="outlined" inputRef={loginName} />
+            <TextField required id="outlined-basic" label="password" variant="outlined" inputRef={password} />
+            <Button variant="text" required id="Submit" onClick={getInputData}>Submit</Button>
+
         </div>
     )
 }

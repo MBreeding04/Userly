@@ -9,31 +9,36 @@ import Paper from '@mui/material/Paper';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import {Account} from './models/Account.js';
-import {useState} from 'react';
+import { Account } from './models/Account.js';
+import { useState } from 'react';
 import ModalBody from './components/ModalBody';
 import Button from "@mui/material/Button";
 import Modal from '@mui/material/Modal';
+import React from 'react';
+let rows = [];
 
 
-
-function createValAccountObject() {
-  const loginName = localStorage.getItem("loginName");
-  const password = localStorage.getItem("password");
-  const userName = localStorage.getItem("userName");
-  const userTag = localStorage.getItem("userTag");
-  const image = localStorage.getItem("image");
-  const gainLoss = localStorage.getItem("gainLoss");
-  return new Account(loginName,password,image,gainLoss);
+function fillTableData() {
+  if (localStorage.getItem("accounts") === null) {
+    let temp = new Account("N/A", "N/A", "N/A", "N/A")
+    rows.push(temp);
+  }
+  else {
+    let accounts = localStorage.getItem("accounts");
+    accounts = JSON.parse(accounts);
+    for (let i = 0; i < accounts.length; i++) {
+      const loginName = accounts[i].loginName;
+      const password = accounts[i].password;
+      const image = accounts[i].image;
+      const gainLoss = accounts[i].gainLoss;
+      let temp = new Account(loginName, password, image, gainLoss);
+      rows.push(temp);
+    }
+  }
 };
+fillTableData();
 
-const rows = [
-  createValAccountObject(), // Returns an Object for the account
-  createValAccountObject(),
-  createValAccountObject(),
-  createValAccountObject(),
-  createValAccountObject(),
-];
+
 
 const darkTheme = createTheme({
   palette: {
@@ -57,48 +62,48 @@ function App() {
       <CssBaseline />
       <div className='Container'>
         <div className="Table-Container">
-        <TableContainer sx={{ width: '65%' }} component={Paper}>
-          <Table aria-label="valorant-account-tables">
-            <TableHead>
-              <TableRow>
-                <TableCell>{process.env.REACT_APP_USER_INFO}</TableCell>
-                <TableCell>Username</TableCell>
-                <TableCell>Password</TableCell>
-                <TableCell>Rank</TableCell>
-                <TableCell>Last Match Rating</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow
-                  key={row.accountName}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {row.accountName}
-                  </TableCell>
-                  <TableCell>
-                    <div className="table-username">
-                      {row.loginName} 
-                      <VisibilityIcon /> 
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="table-username">
-                      {row.password} 
-                      <VisibilityIcon /> 
-                    </div>
-                  </TableCell>
-                  <TableCell><img
-        src = {row.image}
-        alt ="Rank"
-      /></TableCell>
-                  <TableCell>{row.gainLoss}</TableCell>
+          <TableContainer sx={{ width: '65%' }} component={Paper}>
+            <Table aria-label="valorant-account-tables">
+              <TableHead>
+                <TableRow>
+                  <TableCell>{process.env.REACT_APP_USER_INFO}</TableCell>
+                  <TableCell>Username</TableCell>
+                  <TableCell>Password</TableCell>
+                  <TableCell>Rank</TableCell>
+                  <TableCell>Last Match Rating</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {rows.map((row) => (
+                  <TableRow
+                    key={row.accountName}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.accountName}
+                    </TableCell>
+                    <TableCell>
+                      <div className="table-username">
+                        {row.loginName}
+                        <VisibilityIcon />
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="table-username">
+                        {row.password}
+                        <VisibilityIcon />
+                      </div>
+                    </TableCell>
+                    <TableCell><img
+                      src={row.image}
+                      alt="Rank"
+                    /></TableCell>
+                    <TableCell>{row.gainLoss}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </div>
         <Button onClick={handleOpen}>Open modal</Button>
         <Modal
@@ -107,7 +112,7 @@ function App() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <ModalBody/>
+          <ModalBody />
         </Modal>
       </div>
     </ThemeProvider>

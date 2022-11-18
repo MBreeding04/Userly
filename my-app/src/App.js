@@ -91,7 +91,7 @@ function App() {
                   </TableCell>
                   <TableCell><img
         src = {row.image}
-        alt ="car"
+        alt ="Rank"
       /></TableCell>
                   <TableCell>{row.gainLoss}</TableCell>
                 </TableRow>

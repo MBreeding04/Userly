@@ -10,35 +10,11 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Account } from './models/Account.js';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import ModalBody from './components/ModalBody';
 import Button from "@mui/material/Button";
 import Modal from '@mui/material/Modal';
 import React from 'react';
-let rows = [];
-
-
-function fillTableData() {
-  if (localStorage.getItem("accounts") === null) {
-    let temp = new Account("N/A", "N/A", "N/A", "N/A")
-    rows.push(temp);
-  }
-  else {
-    let accounts = localStorage.getItem("accounts");
-    accounts = JSON.parse(accounts);
-    for (let i = 0; i < accounts.length; i++) {
-      const loginName = accounts[i].loginName;
-      const password = accounts[i].password;
-      const image = accounts[i].image;
-      const gainLoss = accounts[i].gainLoss;
-      let temp = new Account(loginName, password, image, gainLoss);
-      rows.push(temp);
-    }
-  }
-};
-fillTableData();
-
-
 
 const darkTheme = createTheme({
   palette: {
@@ -53,6 +29,53 @@ function App() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [rows, setRows] = useState([]);
+
+  const firstRender = useRef(true);
+
+  useEffect(() => {
+  if (firstRender.current) {
+    fillTableData();
+    firstRender.current = false;
+  }
+
+  })
+  
+  
+  async function fillTableData() {
+    var api = '';
+    if (localStorage.getItem("accounts") === null) {
+      let temp = new Account("N/A", "N/A", "N/A", "N/A", "N/A", "N/A")
+      setRows(rows => [...rows, temp]);
+    }
+    else {
+      let accounts = localStorage.getItem("accounts");
+      accounts = JSON.parse(accounts);
+      const amountOfArraysOfData = accounts.length;
+      for (let i = 0; i < amountOfArraysOfData; i++) {
+        const userName = accounts[i].userName;
+        const userTag = accounts[i].userTag;
+        try {
+          await fetch(`https://api.henrikdev.xyz/valorant/v1/mmr/na/${userName.toString()}/${userTag.toString()}`).then(
+            (res) => res.json()).then((res) => api = res);
+          const loginName = accounts[i].loginName.toString();
+          const password = accounts[i].password.toString();
+          const image = api.data.images.small.toString();
+          var gainLoss = api.data.mmr_change_to_last_game.toString();
+          if (gainLoss > 0) {
+            gainLoss = '+' + gainLoss;
+          }
+          
+          let temp = new Account(userName, userTag, loginName, password, image, gainLoss);
+          setRows(rows => [...rows, temp])
+        }
+        catch {
+          console.log("the api failed again");
+        }
+      }
+    }
+  };
+
 
   if (loading) {
     return <div>Loading...</div>;
@@ -67,7 +90,7 @@ function App() {
               <TableHead>
                 <TableRow>
                   <TableCell>{process.env.REACT_APP_USER_INFO}</TableCell>
-                  <TableCell>Username</TableCell>
+                  <TableCell>loginName</TableCell>
                   <TableCell>Password</TableCell>
                   <TableCell>Rank</TableCell>
                   <TableCell>Last Match Rating</TableCell>

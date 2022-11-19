@@ -41,22 +41,19 @@ function ModalBody() {
             amountOfArraysOfData = amountOfArraysOfData.length;
         }
         //stores the data in an object so we can store multiple objects of data i.e multiple accounts
+        let accounts = new Account(inputData['userName'], inputData['userTag'], inputData['loginName'], inputData['password'], api.data.images.small.toString(), api.data.mmr_change_to_last_game.toString());
         let array = [];
         let existingAccounts = [];
-        let accounts = new Account(inputData['loginName'], inputData['password'], api.data.images.small.toString(), api.data.mmr_change_to_last_game.toString());
         if (amountOfArraysOfData > 0) {
-            console.log("im in");
             for (let i = 0; i < amountOfArraysOfData; i++) {
                 let temp = localStorage.getItem("accounts");
                 temp = JSON.parse(temp);
-                existingAccounts[i] = new Account(temp[i].loginName, temp[i].password, temp[i].image, temp[i].gainLoss);
-                console.log(existingAccounts[i]);
+                existingAccounts[i] = new Account(temp[i].userName, temp[i].userTag, temp[i].loginName, temp[i].password, temp[i].image, temp[i].gainLoss);
                 array.push(existingAccounts[i]);
             }
         }
         array.push(accounts);
         localStorage.setItem("accounts", JSON.stringify(array));
-        console.log("after");
         window.location.reload(false);
     }
     catch{

@@ -8,13 +8,13 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Account } from './models/Account.js';
 import { useState, useRef, useEffect } from 'react';
 import ModalBody from './components/ModalBody';
 import Button from "@mui/material/Button";
 import Modal from '@mui/material/Modal';
 import React from 'react';
+import ShowAndHidePassword from './components/ShowAndHidePassword';
 
 const darkTheme = createTheme({
   palette: {
@@ -25,13 +25,13 @@ const darkTheme = createTheme({
 function App() {
 
   const [loading, setLoading] = useState(false);
-  const [accounts, setAccounts] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [rows, setRows] = useState([]);
-
   const firstRender = useRef(true);
+  var tempLogin = '';
+  var tempPassword = '';
 
   useEffect(() => {
   if (firstRender.current) {
@@ -90,7 +90,8 @@ function App() {
               <TableHead>
                 <TableRow>
                   <TableCell>{process.env.REACT_APP_USER_INFO}</TableCell>
-                  <TableCell>loginName</TableCell>
+                  <TableCell>User Name</TableCell>
+                  <TableCell>Login Name</TableCell>
                   <TableCell>Password</TableCell>
                   <TableCell>Rank</TableCell>
                   <TableCell>Last Match Rating</TableCell>
@@ -98,6 +99,8 @@ function App() {
               </TableHead>
               <TableBody>
                 {rows.map((row) => (
+                  tempLogin = row.loginName,
+                  tempPassword = row.password,
                   <TableRow
                     key={row.accountName}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -106,15 +109,16 @@ function App() {
                       {row.accountName}
                     </TableCell>
                     <TableCell>
+                      {row.userName}
+                    </TableCell>
+                    <TableCell>
                       <div className="table-username">
-                        {row.loginName}
-                        <VisibilityIcon />
+                      <ShowAndHidePassword sendData={tempLogin}></ShowAndHidePassword>
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="table-username">
-                        {row.password}
-                        <VisibilityIcon />
+                      <ShowAndHidePassword sendData={tempPassword}></ShowAndHidePassword>
                       </div>
                     </TableCell>
                     <TableCell><img

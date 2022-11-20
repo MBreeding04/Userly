@@ -63,10 +63,10 @@ function ModalBody() {
     return (
         <div className='container'>
             <div id='error'></div>
-            <TextField required id="outlined-basic" label="username" variant="outlined" inputRef={userName} />
-            <TextField required id="outlined-basic" label="tag" variant="outlined" inputRef={userTag} />
-            <TextField required id="outlined-basic" label="login" variant="outlined" inputRef={loginName} />
-            <TextField required id="outlined-basic" label="password" variant="outlined" inputRef={password} />
+            <TextField required id="outlined-basic" label="UserName" variant="outlined" inputRef={userName} />
+            <TextField required id="outlined-basic" label="Tag-Line" variant="outlined" inputRef={userTag} />
+            <TextField required id="outlined-basic" label="Login Name" variant="outlined" inputRef={loginName} />
+            <TextField required id="outlined-basic" label="Password" variant="outlined" inputRef={password} />
             <Button variant="text" required id="Submit" onClick={getInputData}>Submit</Button>
 
         </div>

@@ -1,5 +1,16 @@
-.Container {
-  height: 100vh;
+.tabelOfData{
+  justify-content: space-between;
+    background-color: #1E1F25;
+    border-radius: 20px;
+    height: 244px;
+    padding: 0 10px 10px 10px;
+    overflow: scroll;
+}
+.DeleteButton{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
 }
 
 .Table-Container {

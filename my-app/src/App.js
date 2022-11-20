@@ -32,6 +32,7 @@ function App() {
   const firstRender = useRef(true);
   var tempLogin = '';
   var tempPassword = '';
+  var indexRef = -1;
 
   useEffect(() => {
   if (firstRender.current) {
@@ -40,6 +41,24 @@ function App() {
   }
 
   })
+  function DeleteRow(id){
+    var data = localStorage.getItem("accounts");
+    data = JSON.parse(data);
+    var temp = data.splice(id,1);
+    let final = [];
+    for(let i = 0; i < data.length; i++){
+      if(data[i].userName === temp.userName)
+      {
+
+      }
+      else{
+        const g = new Account(data[i].userName, data[i].userTag, data[i].loginName,data[i].password,data[i].image,data[i].gainLoss);
+        final.push(g);
+        localStorage.setItem("accounts", JSON.stringify(final));
+      }
+    }
+    window.location.reload(false);
+  }
   
   
   async function fillTableData() {
@@ -70,7 +89,13 @@ function App() {
           setRows(rows => [...rows, temp])
         }
         catch {
-          console.log("the api failed again");
+          const userName = accounts[i].userName;
+          const userTag = accounts[i].userTag;
+          const loginName = accounts[i].loginName.toString();
+          const password = accounts[i].password.toString();
+          const image = accounts[i].image;
+          let temp = new Account(userName, userTag, loginName, password, image ,"error retreiving current data");
+          setRows(rows => [...rows, temp]);
         }
       }
     }
@@ -95,10 +120,13 @@ function App() {
                   <TableCell>Password</TableCell>
                   <TableCell>Rank</TableCell>
                   <TableCell>Last Match Rating</TableCell>
+                  <TableCell>Delete</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {rows.map((row) => (
+                  indexRef++,
+                  row.id = indexRef,
                   tempLogin = row.loginName,
                   tempPassword = row.password,
                   <TableRow
@@ -121,11 +149,11 @@ function App() {
                       <ShowAndHidePassword sendData={tempPassword}></ShowAndHidePassword>
                       </div>
                     </TableCell>
-                    <TableCell><img
-                      src={row.image}
-                      alt="Rank"
-                    /></TableCell>
+                    <TableCell><img src={row.image} alt="Rank"/></TableCell>
                     <TableCell>{row.gainLoss}</TableCell>
+                    <tableCell>
+                      <Button onClick={() => DeleteRow(row.id)}>Delete</Button>
+                    </tableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -143,6 +171,7 @@ function App() {
         </Modal>
       </div>
     </ThemeProvider>
+
   );
 }
 export default App;

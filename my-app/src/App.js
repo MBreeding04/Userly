@@ -79,10 +79,7 @@ function App() {
           const loginName = accounts[i].loginName.toString();
           const password = accounts[i].password.toString();
           const image = api.data.images.small.toString();
-          var gainLoss = api.data.mmr_change_to_last_game.toString();
-          if (gainLoss > 0) {
-            gainLoss = '+' + gainLoss;
-          }
+          var gainLoss = api.data.ranking_in_tier.toString();
 
           let temp = new Account(userName, userTag, loginName, password, image, gainLoss);
           setRows(rows => [...rows, temp])
@@ -119,7 +116,7 @@ function App() {
                     <TableCell>Login Name</TableCell>
                     <TableCell>Password</TableCell>
                     <TableCell>Rank</TableCell>
-                    <TableCell>Last Match Rating</TableCell>
+                    <TableCell>RR in rank</TableCell>
                     <TableCell>Delete</TableCell>
                   </TableRow>
                 </TableHead>

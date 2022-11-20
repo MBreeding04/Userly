@@ -27,9 +27,6 @@ function ModalBody() {
         await fetch(`https://api.henrikdev.xyz/valorant/v1/mmr/na/${inputData['userName'].toString()}/${inputData['userTag'].toString()}`).then(
             (res) => res.json()).then((res) => api = res);
 
-        if (api.data.mmr_change_to_last_game > 0) {
-            api.data.mmr_change_to_last_game = '+' + api.data.mmr_change_to_last_game;
-        }
         let amountOfArraysOfData = 0;
         //gets number of objects stored in local storage
 
@@ -41,7 +38,7 @@ function ModalBody() {
             amountOfArraysOfData = amountOfArraysOfData.length;
         }
         //stores the data in an object so we can store multiple objects of data i.e multiple accounts
-        let accounts = new Account(inputData['userName'], inputData['userTag'], inputData['loginName'], inputData['password'], api.data.images.small.toString(), api.data.mmr_change_to_last_game.toString());
+        let accounts = new Account(inputData['userName'], inputData['userTag'], inputData['loginName'], inputData['password'], api.data.images.small.toString(), api.data.ranking_in_tier.toString());
         let array = [];
         let existingAccounts = [];
         if (amountOfArraysOfData > 0) {

@@ -113,12 +113,12 @@ function App() {
                 <TableHead>
                   <TableRow>
                     <TableCell>{process.env.REACT_APP_USER_INFO}</TableCell>
-                    <TableCell>User Name</TableCell>
-                    <TableCell>Login Name</TableCell>
-                    <TableCell>Password</TableCell>
-                    <TableCell>Rank</TableCell>
-                    <TableCell>RR In Rank</TableCell>
-                    <TableCell><div className="deleteLabel">Delete</div></TableCell>
+                    <TableCell><Typography variant='h6'>User Name</Typography></TableCell>
+                    <TableCell><Typography variant='h6'>Login Name</Typography></TableCell>
+                    <TableCell><Typography variant='h6'>Password</Typography></TableCell>
+                    <TableCell><Typography variant='h6'>Rank</Typography></TableCell>
+                    <TableCell><Typography variant='h6'>RR In Rank</Typography></TableCell>
+                    <TableCell><Typography variant='h6'><div className="deleteLabel">Delete</div></Typography></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>

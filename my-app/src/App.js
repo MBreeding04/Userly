@@ -34,6 +34,7 @@ function App() {
   var tempLogin = '';
   var tempPassword = '';
   var indexRef = -1;
+  var snd = new Audio("C:\Users\Mateo\Desktop\Userly\my-app\Bow.wav")
 
   useEffect(() => {
     if (firstRender.current) {
@@ -59,7 +60,9 @@ function App() {
     }
     window.location.reload(false);
   }
-
+  const start = () =>{
+    snd.play()
+  }
 
   async function fillTableData() {
     var api = '';
@@ -104,6 +107,7 @@ function App() {
   }
   return (
     <ThemeProvider theme={darkTheme}>
+      <button onClick={start}>Play</button>
       <CssBaseline />
       <div className='Container'>
         <div className="Table-Container">
@@ -112,7 +116,6 @@ function App() {
               <Table aria-label="valorant-account-tables">
                 <TableHead>
                   <TableRow key={indexRef}>
-                    <TableCell>{process.env.REACT_APP_USER_INFO}</TableCell>
                     <TableCell><Typography variant='h6'>User Name</Typography></TableCell>
                     <TableCell><Typography variant='h6'>Login Name</Typography></TableCell>
                     <TableCell><Typography variant='h6'>Password</Typography></TableCell>
@@ -159,7 +162,7 @@ function App() {
                     </TableRow>
 
                   ))}
-                  <TableRow></TableRow>
+                  <TableRow key={4}></TableRow>
                 </TableBody>
 
               </Table>

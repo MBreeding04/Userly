@@ -1,1 +1,0 @@
-make a shortcut to the file Userly.bat, when you click that the application will launch up

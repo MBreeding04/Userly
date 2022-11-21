@@ -111,7 +111,7 @@ function App() {
             <div className='tableOfData'>
               <Table aria-label="valorant-account-tables">
                 <TableHead>
-                  <TableRow>
+                  <TableRow key={indexRef}>
                     <TableCell>{process.env.REACT_APP_USER_INFO}</TableCell>
                     <TableCell><Typography variant='h6'>User Name</Typography></TableCell>
                     <TableCell><Typography variant='h6'>Login Name</Typography></TableCell>
@@ -127,7 +127,7 @@ function App() {
                     row.id = indexRef,
                     tempLogin = row.loginName,
                     tempPassword = row.password,
-                    <TableRow
+                    <TableRow 
                       key={row.accountName}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
@@ -151,11 +151,11 @@ function App() {
                       <TableCell> <Typography sx={{
                         color:"text.primary"
                       }} variant='h6'><div className='gainLoss'>{row.gainLoss}</div></Typography></TableCell>
-                      <tableCell>
+                      <TableCell>
                         <div className='deleteButton'>
                           <Button color="error" onClick={() => DeleteRow(row.id)} variant="outlined" className='DeleteButton'>Delete</Button>
                         </div>
-                      </tableCell>
+                      </TableCell>
                     </TableRow>
 
                   ))}

@@ -6,22 +6,54 @@
     padding: 0 10px 10px 10px;
     overflow: scroll;
 }
-.DeleteButton{
+.deleteButton{
+  margin-top: 4em;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 80%;
 }
+.deleteLabel{
+  margin-top: 4em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4em;
+  width: 80%;
+}
 
+.rank{
+  align-items: center;
+  justify-content: space-between;
+  margin-left:-1em;
+  margin-right: 3em;
+  display: flex;
+}
+.gainLoss{
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 2em;
+  display: flex;
+}
 .Table-Container {
+  margin-top: 5em;
+  margin-bottom: 5em;
   display: flex;
   width: 100%;
   height: 60%;
   justify-content: center;
   align-items: center;
 }
+.addUser{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-left: 25em;
+  bottom: 4em;
+}
 
 .table-username {
+  margin-top: 2em;
   display: flex;
   align-items: center;
   justify-content: space-between;

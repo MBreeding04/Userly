@@ -15,6 +15,7 @@ import Button from "@mui/material/Button";
 import Modal from '@mui/material/Modal';
 import React from 'react';
 import ShowAndHidePassword from './components/ShowAndHidePassword';
+import { Typography } from '@mui/material';
 
 const darkTheme = createTheme({
   palette: {
@@ -116,8 +117,8 @@ function App() {
                     <TableCell>Login Name</TableCell>
                     <TableCell>Password</TableCell>
                     <TableCell>Rank</TableCell>
-                    <TableCell>RR in rank</TableCell>
-                    <TableCell>Delete</TableCell>
+                    <TableCell>RR In Rank</TableCell>
+                    <TableCell><div className="deleteLabel">Delete</div></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -134,7 +135,7 @@ function App() {
                         {row.accountName}
                       </TableCell>
                       <TableCell>
-                        {row.userName}
+                        <Typography variant='h6'>{row.userName}</Typography>
                       </TableCell>
                       <TableCell>
                         <div className="table-username">
@@ -146,27 +147,40 @@ function App() {
                           <ShowAndHidePassword sendData={tempPassword}></ShowAndHidePassword>
                         </div>
                       </TableCell>
-                      <TableCell><img src={row.image} alt="Rank" /></TableCell>
-                      <TableCell>{row.gainLoss}</TableCell>
+                      <TableCell><img className="rank" src={row.image} alt="Rank" /></TableCell>
+                      <TableCell> <Typography sx={{
+                        color:"text.primary"
+                      }} variant='h6'><div className='gainLoss'>{row.gainLoss}</div></Typography></TableCell>
                       <tableCell>
-                        <Button onClick={() => DeleteRow(row.id)} variant="outlined" className='DeleteButton'>Delete</Button>
+                        <div className='deleteButton'>
+                          <Button color="error" onClick={() => DeleteRow(row.id)} variant="outlined" className='DeleteButton'>Delete</Button>
+                        </div>
                       </tableCell>
                     </TableRow>
+
                   ))}
+                  <TableRow></TableRow>
                 </TableBody>
+
               </Table>
             </div>
+            <div className='AddUser'>
+              <Button sx={{
+                ml: 70,
+                my: 2,
+                borderRadius: 25
+              }} onClick={handleOpen} variant="outlined" color='success'>Add User</Button>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <ModalBody />
+              </Modal>
+            </div>
           </TableContainer>
-        </div>
-        <Button onClick={handleOpen}>Add User</Button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <ModalBody />
-        </Modal>
+        </div >
       </div>
     </ThemeProvider>
 

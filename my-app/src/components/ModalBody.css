@@ -1,7 +1,15 @@
 .container {
-    width: 50%;
-    height: 100vh;
+    margin-top: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
+
+}
+.input{
+    margin-right: 1em;
+    margin-top: 0.75em;
+}
+.submit{
+    margin-left: 3em;
+    margin-top: 0.75em;
 }

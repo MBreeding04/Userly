@@ -1,0 +1,9 @@
+1. go to my-app folder
+
+2.find Userly.bat
+
+3.make a shortcut to Userly.bat
+
+4.put shortcut on desktop
+
+5.enjoy looking at all your accounts

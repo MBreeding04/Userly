@@ -16,6 +16,8 @@ import Modal from '@mui/material/Modal';
 import React from 'react';
 import ShowAndHidePassword from './components/ShowAndHidePassword';
 import { Typography } from '@mui/material';
+import sound from './BOW.mp3';
+import { display } from '@mui/system';
 
 const darkTheme = createTheme({
   palette: {
@@ -33,7 +35,7 @@ function App() {
   var tempLogin = '';
   var tempPassword = '';
   var indexRef = -1;
-  var snd = new Audio("./Bow.wav")
+
 
   useEffect(() => {
     if (firstRender.current) {
@@ -46,20 +48,21 @@ function App() {
   function DeleteRow(id) {
     var data = localStorage.getItem("accounts");
     data = JSON.parse(data);
-    var temp = data.splice(id, 1);
-    let final = [];
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].userName !== temp.userName) {
-        const g = new Account(data[i].userName, data[i].userTag, data[i].loginName, data[i].password, data[i].image, data[i].gainLoss);
-        final.push(g);
-        localStorage.setItem("accounts", JSON.stringify(final));
+    if (data.length === 1) {
+      localStorage.removeItem("accounts");
+    }
+    else {
+      var temp = data.splice(id, 1);
+      let final = [];
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].userName !== temp.userName) {
+          const g = new Account(data[i].userName, data[i].userTag, data[i].loginName, data[i].password, data[i].image, data[i].gainLoss);
+          final.push(g);
+          localStorage.setItem("accounts", JSON.stringify(final));
+        }
       }
     }
     window.location.reload(false);
-  }
-
-  const start = () =>{
-    snd.play()
   }
 
   async function fillTableData() {
@@ -97,6 +100,10 @@ function App() {
       }
     }
   };
+  const play = () => {
+    const audio = new Audio(sound)
+    audio.play()
+  }
 
   if (loading) {
     return <div>Loading...</div>;
@@ -104,6 +111,8 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
+      <Button onClick={play} style={{color: "transparent",  cursor: "default", backgroundColor: "transparent",border:"transparent"}}>Play
+        Sound</Button>
       <div className='Container'>
         <div className="Table-Container">
           <TableContainer sx={{ width: '65%' }} component={Paper} key={1000}>
@@ -126,31 +135,31 @@ function App() {
                     row.id = indexRef,
                     tempLogin = row.loginName,
                     tempPassword = row.password,
-                    <TableRow 
-                      key={"p"+row.id}
+                    <TableRow
+                      key={"p" + row.id}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
                       <TableCell component="th" scope="row" key={row.id}>
                         {row.accountName}
                       </TableCell>
-                      <TableCell key={"q"+row.id}>
+                      <TableCell key={"q" + row.id}>
                         <Typography variant='h6'>{row.userName}</Typography>
                       </TableCell>
-                      <TableCell key={"w"+row.id}>
+                      <TableCell key={"w" + row.id}>
                         <div className="table-username">
                           <ShowAndHidePassword sendData={tempLogin}></ShowAndHidePassword>
                         </div>
                       </TableCell>
-                      <TableCell key={"e"+row.id}>
+                      <TableCell key={"e" + row.id}>
                         <div className="table-username">
                           <ShowAndHidePassword sendData={tempPassword}></ShowAndHidePassword>
                         </div>
                       </TableCell>
-                      <TableCell key={"r"+row.id}><img className="rank" src={row.image} alt="Rank" /></TableCell>
-                      <TableCell key={"t"+row.id}> <Typography sx={{
-                        color:"text.primary"
+                      <TableCell key={"r" + row.id}><img className="rank" src={row.image} alt="Rank" /></TableCell>
+                      <TableCell key={"t" + row.id}> <Typography sx={{
+                        color: "text.primary"
                       }} variant='h6'><div className='gainLoss'>{row.gainLoss}</div></Typography></TableCell>
-                      <TableCell key={"y"+row.id}>
+                      <TableCell key={"y" + row.id}>
                         <div className='deleteButton'>
                           <Button color="error" onClick={() => DeleteRow(row.id)} variant="outlined" className='DeleteButton'>Delete</Button>
                         </div>
@@ -174,14 +183,14 @@ function App() {
                 aria-describedby="modal-modal-description"
               >
                 <div>
-                <ModalBody />
+                  <ModalBody />
                 </div>
               </Modal>
             </div>
           </TableContainer>
         </div >
       </div>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }
 export default App;

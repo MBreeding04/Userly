@@ -21,7 +21,7 @@
   "main": "electron-starter.js",
   "scripts": {
     "startReact": "cross-env BROWSER=none react-scripts start",
-    "start": "electron-forge start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "package": "electron-forge package",
     "make": "electron-forge make",

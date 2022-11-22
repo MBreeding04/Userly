@@ -103,9 +103,6 @@ function App() {
   }
   return (
     <ThemeProvider theme={darkTheme}>
-      <audio controls>
-      <source src="/Bow.mp3" type="audio/mpeg"/>
-        </audio>
       <CssBaseline />
       <div className='Container'>
         <div className="Table-Container">

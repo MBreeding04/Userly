@@ -172,8 +172,9 @@ function App() {
             </div>
             <div className='AddUser'>
               <Button sx={{
-                ml: 70,
-                my: 2,
+                ml: "13%",
+                my: "1%",
+                width: "75%",
                 borderRadius: 25
               }} onClick={handleOpen} variant="outlined" color='success'>Add User</Button>
               <Modal

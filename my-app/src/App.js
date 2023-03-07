@@ -3,7 +3,6 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -14,10 +13,10 @@ import ModalBody from './components/ModalBody';
 import Button from "@mui/material/Button";
 import Modal from '@mui/material/Modal';
 import React from 'react';
-import ShowAndHidePassword from './components/ShowAndHidePassword';
+import Password from './components/Password';
+import Login from './components/LoginName';
 import { Typography } from '@mui/material';
-import sound from './BOW.mp3';
-import { display } from '@mui/system';
+
 
 const darkTheme = createTheme({
   palette: {
@@ -26,9 +25,10 @@ const darkTheme = createTheme({
 });
 
 function App() {
+  // setloading state is never used but may be implemented in the future
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => setOpen(true) ;
   const handleClose = () => setOpen(false);
   const [rows, setRows] = useState([]);
   const firstRender = useRef(true);
@@ -100,35 +100,17 @@ function App() {
       }
     }
   };
-  const play = () => {
-    const audio = new Audio(sound)
-    audio.play()
-  }
-
   if (loading) {
     return <div>Loading...</div>;
   }
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <Button onClick={play} style={{color: "transparent",  cursor: "default", backgroundColor: "transparent",border:"transparent"}}>Play
-        Sound</Button>
       <div className='Container'>
         <div className="Table-Container">
           <TableContainer sx={{ width: '65%' }} component={Paper} key={1000}>
             <div className='tableOfData'>
               <Table aria-label="valorant-account-tables">
-                <TableHead key={1001}>
-                  <TableRow key={indexRef}>
-                    <TableCell key={1008}></TableCell>
-                    <TableCell key={1002}><Typography variant='h6'>User Name</Typography></TableCell>
-                    <TableCell key={1003}><Typography variant='h6'>Login Name</Typography></TableCell>
-                    <TableCell key={1004}><Typography variant='h6'>Password</Typography></TableCell>
-                    <TableCell key={1005}><Typography variant='h6'>Rank</Typography></TableCell>
-                    <TableCell key={1006}><Typography variant='h6'>RR In Rank</Typography></TableCell>
-                    <TableCell key={1007}><Typography variant='h6'><div className="deleteLabel">Delete</div></Typography></TableCell>
-                  </TableRow>
-                </TableHead>
                 <TableBody key={1008}>
                   {rows.map((row) => (
                     indexRef++,
@@ -143,22 +125,24 @@ function App() {
                         {row.accountName}
                       </TableCell>
                       <TableCell key={"q" + row.id}>
-                        <Typography variant='h6'>{row.userName}</Typography>
+                        <Typography sx={{fontSize: 35, fontWeight: 'bold'}}variant='h6'><div className='UserName'>{row.userName}</div></Typography>
                       </TableCell>
-                      <TableCell key={"w" + row.id}>
-                        <div className="table-username">
-                          <ShowAndHidePassword sendData={tempLogin}></ShowAndHidePassword>
+                      <TableCell sx={{width: 0.2}}key={"w" + row.id}>
+                        <div className="table-loginPassword">
+                          <Login sendData={tempLogin}></Login>
                         </div>
                       </TableCell>
                       <TableCell key={"e" + row.id}>
-                        <div className="table-username">
-                          <ShowAndHidePassword sendData={tempPassword}></ShowAndHidePassword>
+                        <div className="table-loginPassword">
+                          <Password sendData={tempPassword}></Password>
                         </div>
                       </TableCell>
                       <TableCell key={"r" + row.id}><img className="rank" src={row.image} alt="Rank" /></TableCell>
-                      <TableCell key={"t" + row.id}> <Typography sx={{
-                        color: "text.primary"
-                      }} variant='h6'><div className='gainLoss'>{row.gainLoss}</div></Typography></TableCell>
+                      <TableCell sx={{paddingLeft: 1}}key={"t" + row.id}> <Typography sx={{
+                        color: "text.primary",
+                        fontSize: 25,
+                        fontWeight: 'bold'
+                      }} variant='h6'><div className='gainLoss'>{row.gainLoss}rr</div></Typography></TableCell>
                       <TableCell key={"y" + row.id}>
                         <div className='deleteButton'>
                           <Button color="error" onClick={() => DeleteRow(row.id)} variant="outlined" className='DeleteButton'>Delete</Button>

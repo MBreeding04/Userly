@@ -14,7 +14,7 @@ function ModalBody() {
     const userTag = useState();
     const loginName = useState();
     const password = useState();
-    var inputData = new Array();
+    var inputData = [];
     const [body, setBody] = useState();
     var api = useState();
 
@@ -58,7 +58,7 @@ function ModalBody() {
             window.location.reload(false);
         }
         catch {
-            console.log("jacob the api failed again...");
+            console.log("The api failed again...");
             setDiv();
         }
     };
@@ -70,7 +70,7 @@ function ModalBody() {
             borderRadius: 4,
             minWidth: 2,
             flex: "flex",
-            height: 80,
+            height: 100,
             width: "64%",
             alignContent: 'center',
             alignItems:'center',

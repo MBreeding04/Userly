@@ -3,8 +3,14 @@
     background-color: #1E1F25;
     border-radius: 20px;
     height: 244px;
-    padding: 0 10px 10px 10px;
     overflow: scroll;
+}
+.UserName{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 1em;
+
 }
 .deleteButton{
   display: flex;
@@ -24,14 +30,14 @@
 .rank{
   align-items: center;
   justify-content: space-between;
-  margin-left:-1em;
-  margin-right: 3em;
+  margin-left:0.5em;
+  margin-right: 1em;
   display: flex;
 }
 .gainLoss{
   align-items: center;
   justify-content: space-between;
-  margin-left: 2em;
+  margin-right: 1em;
   display: flex;
 }
 .Table-Container {
@@ -43,10 +49,11 @@
   justify-content: center;
   align-items: center;
 }
-.table-username {
-  margin-top: 2em;
+.table-loginPassword {
+  margin-top: 1em;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 80%;
+  margin-right: 1em;
 }

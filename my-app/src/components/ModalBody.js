@@ -7,13 +7,18 @@ import { Box } from '@mui/system';
 import { Alert } from '@mui/material';
 
 
-function ModalBody() {
+
+function ModalBody(props) {
 
     //references to store the value in each textField
     const userName = useState();
     const userTag = useState();
     const loginName = useState();
     const password = useState();
+    const [uN, setuN ] = useState(props.userName);
+    const [uT, setuT] = useState(props.userTag);
+    const [lN, setlN] = useState(props.loginName);
+    const [p, setp] = useState(props.password);
     var inputData = [];
     const [body, setBody] = useState();
     var api = useState();
@@ -62,36 +67,54 @@ function ModalBody() {
             setDiv();
         }
     };
-
+    const handleuserName = (e) => {
+        console.log(e.target.value)
+        console.log(uN)
+        setuN(e.target.value)
+    }
+    const handleuserTag = (e) => {
+        console.log(e.target.value)
+        console.log(uT)
+        setuT(e.target.value)
+    }
+    const handleloginName = (e) => {
+        console.log(e.target.value)
+        console.log(lN)
+        setlN(e.target.value)
+    }
+    const handlepassword = (e) => {
+        console.log(e.target.value)
+        console.log(p)
+        setp(e.target.value)
+    }
     return (
         <Box sx={{
+            display:'flex',
+            flexDirection:'row',
+            justifyContent:'center',
+            alignContent:'center',
+            alignSelf:'center',
             bgcolor: 'background.paper',
             boxShadow: 2,
             borderRadius: 4,
-            minWidth: 2,
-            flex: "flex",
-            height: 100,
-            width: "64%",
-            alignContent: 'center',
-            alignItems:'center',
-            ml: "17.5%",
-            mt: "20%"
+            width:'70%',
+            height: 100
         }
         }>
             <div className='container'>
             <div className='alert'>{body}</div>
                 <div id='error'></div>
                 <div className='input'>
-                    <TextField className="input" required id="outlined-basic" label="UserName" variant="outlined" inputRef={userName} />
+                    <TextField value={uN} onChange={handleuserName} className="input" required id="outlined-basic" label="UserName" variant="outlined" inputRef={userName} />
                 </div>
                 <div className='input'>
-                    <TextField className="input" required id="outlined-basic" label="Tag-Line" variant="outlined" inputRef={userTag} />
+                    <TextField value={uT} onChange={handleuserTag} className="input" required id="outlined-basic" label="Tag-Line" variant="outlined" inputRef={userTag} />
                 </div>
                 <div className='input'>
-                    <TextField className="input" required id="outlined-basic" label="LoginName" variant="outlined" inputRef={loginName} />
+                    <TextField value={lN} onChange={handleloginName} className="input" required id="outlined-basic" label="LoginName" variant="outlined" inputRef={loginName} />
                 </div>
                 <div className='input'>
-                    <TextField className="input" required id="outlined-basic" label="Password" variant="outlined" inputRef={password} />
+                    <TextField value={p} onChange={handlepassword} className="input" required id="outlined-basic" label="Password" variant="outlined" inputRef={password} />
                 </div>
                 <div className='submit'>
                     <Button color="success" className="input" variant="contained" required id="Submit" onClick={getInputData}>Submit</Button>

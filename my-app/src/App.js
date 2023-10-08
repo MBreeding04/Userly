@@ -26,6 +26,7 @@ const darkTheme = createTheme({
 
 function App() {
   // setloading state is never used but may be implemented in the future
+  const [editedAccount, seteditedAccount] = useState(new Account("", "", "", "", "", ""));
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true) ;
@@ -45,7 +46,7 @@ function App() {
 
   })
 
-  function DeleteRow(id) {
+  function DeleteRow(id, reload) {
     var data = localStorage.getItem("accounts");
     data = JSON.parse(data);
     if (data.length === 1) {
@@ -62,7 +63,16 @@ function App() {
         }
       }
     }
-    window.location.reload(false);
+    if(reload === true){
+      window.location.reload(false)
+    }
+  }
+  function editRow(id) {
+    var data = localStorage.getItem("accounts");
+    data = JSON.parse(data);
+    seteditedAccount(new Account(data[id].userName, data[id].userTag, data[id].loginName, data[id].password, data[id].image, data[id].gainLoss));
+    handleOpen()
+    DeleteRow(id, false)
   }
 
   async function fillTableData() {
@@ -145,7 +155,12 @@ function App() {
                       }} variant='h6'><div className='gainLoss'>{row.gainLoss}rr</div></Typography></TableCell>
                       <TableCell key={"y" + row.id}>
                         <div className='deleteButton'>
-                          <Button color="error" onClick={() => DeleteRow(row.id)} variant="outlined" className='DeleteButton'>Delete</Button>
+                          <Button color="secondary" onClick={() => editRow(row.id)} variant="outlined" className='DeleteButton'>Edit</Button>
+                        </div>
+                      </TableCell>
+                      <TableCell key={"y" + row.id}>
+                        <div className='deleteButton'>
+                          <Button color="error" onClick={() => DeleteRow(row.id, true)} variant="outlined" className='DeleteButton'>Delete</Button>
                         </div>
                       </TableCell>
                     </TableRow>
@@ -166,10 +181,9 @@ function App() {
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+                sx={{display:'flex',flexDirection:'column',justifyContent:'center',alignContent:'center', alignItems:'center'}}
               >
-                <div>
-                  <ModalBody />
-                </div>
+                  <ModalBody userName={editedAccount.userName} userTag={editedAccount.userTag} loginName={editedAccount.loginName} password={editedAccount.password}/>
               </Modal>
             </div>
           </TableContainer>

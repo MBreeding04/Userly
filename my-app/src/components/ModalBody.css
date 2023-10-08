@@ -1,15 +1,12 @@
-.container {
-    margin-top: -30%;
+.container{
     display: flex;
+    flex-direction: row;
     justify-content: center;
-    align-items: center;
-
+    align-content: center;
 }
 .input{
-    margin-right: 1em;
-    margin-top: 0.75em;
+    margin: 20px;
 }
 .submit{
-    margin-left: 3em;
-    margin-top: 0.75em;
+    margin-top: 28.5px;
 }

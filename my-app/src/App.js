@@ -104,7 +104,7 @@ function App() {
           const loginName = accounts[i].loginName.toString();
           const password = accounts[i].password.toString();
           const image = accounts[i].image;
-          let temp = new Account(userName, userTag, loginName, password, image, "error retreiving current data");
+          let temp = new Account(userName, userTag, loginName, password, image, "(Error)");
           setRows(rows => [...rows, temp]);
         }
       }
@@ -150,7 +150,7 @@ function App() {
                       <TableCell key={"r" + row.id}><img className="rank" src={row.image} alt="Rank" /></TableCell>
                       <TableCell sx={{paddingLeft: 1}}key={"t" + row.id}> <Typography sx={{
                         color: "text.primary",
-                        fontSize: 25,
+                        fontSize: 19,
                         fontWeight: 'bold'
                       }} variant='h6'><div className='gainLoss'>{row.gainLoss}rr</div></Typography></TableCell>
                       <TableCell key={"y" + row.id}>

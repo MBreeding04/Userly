@@ -28,7 +28,7 @@ function ShowAndHidePassword(data) {
         <div className="row">
             <div className="col-sm-3">
                 <div className="input-group my-4 mx-4">
-                    <TextField label="Password" type={passwordType} onChange={handlePasswordChange} value={tempData} name="password" className="form-control" />
+                    <TextField sx={{maxWidth:'75%', minWidth:'75%'}}label="Password" type={passwordType} onChange={handlePasswordChange} value={tempData} name="password" className="form-control" />
                     <div className="input-group-btn">
                         <Button className="btn btn-outline-primary" onClick={togglePassword}>
                             {passwordType === "password" ? <VisibilityOffIcon/> : <VisibilityIcon/>}

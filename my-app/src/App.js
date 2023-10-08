@@ -135,7 +135,7 @@ function App() {
                         {row.accountName}
                       </TableCell>
                       <TableCell key={"q" + row.id}>
-                        <Typography sx={{fontSize: 35, fontWeight: 'bold'}}variant='h6'><div className='UserName'>{row.userName}</div></Typography>
+                        <Typography sx={{fontSize: 30, fontWeight: 'bold'}}variant='h6'><div className='UserName'>{row.userName}</div></Typography>
                       </TableCell>
                       <TableCell sx={{width: 0.2}}key={"w" + row.id}>
                         <div className="table-loginPassword">

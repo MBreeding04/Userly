@@ -5,3 +5,8 @@ features include: revealing of info, also hiding of info(streamer friendly), cop
 
 
 only works for NA valorant accounts and windows based systems!
+
+
+https://github.com/MBreeding04/Userly/assets/91292420/3376d20b-0550-4379-a851-839f791d0ad6
+
+
